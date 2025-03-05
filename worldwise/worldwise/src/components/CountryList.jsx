@@ -4,7 +4,11 @@ import Spinner from './Spinner.jsx'
 import Message from './Message.jsx';
 import CountryItem from './CountryItem.jsx';
 
-function CountryList({ cities, isLoading }) {
+import { useCities } from '../contexts/CitiesContext.jsx';
+
+function CountryList() {
+
+    const { cities, isLoading } = useCities;
 
     if (isLoading) {
         return <Spinner />

@@ -10,7 +10,7 @@
         "lat": 38.727881642324164,
         "lng": -9.140900099907554
       },
-      "id": 73930385
+      "id": "73930385"
     },
     {
       "cityName": "Madrid",
@@ -22,7 +22,7 @@
         "lat": 40.46635901755316,
         "lng": -3.7133789062500004
       },
-      "id": 17806751
+      "id": "17806751"
     },
     {
       "cityName": "Berlin",
@@ -34,7 +34,91 @@
         "lat": 52.53586782505711,
         "lng": 13.376933665713324
       },
-      "id": 98443197
+      "id": "98443197"
+    },
+    {
+      "id": "7659",
+      "cityName": "Castello de la Plana",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2025-03-06T09:03:09.444Z",
+      "notes": "d",
+      "position": {
+        "lat": "39.98251344672131",
+        "lng": "-0.03348410836225391"
+      }
+    },
+    {
+      "id": "004b",
+      "cityName": "Burriana",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2025-03-06T09:30:13.276Z",
+      "notes": "fsf",
+      "position": {
+        "lat": "39.882869315047664",
+        "lng": "-0.08105959481217619"
+      }
+    },
+    {
+      "id": "5514",
+      "cityName": "la Vall d'Uixo",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2025-03-06T09:35:36.491Z",
+      "notes": "dd",
+      "position": {
+        "lat": "39.81908558516615",
+        "lng": "-0.23074923239659206"
+      }
+    },
+    {
+      "id": "623c",
+      "cityName": "Schloßvippach",
+      "country": "Germany",
+      "emoji": "🇩🇪",
+      "date": "2025-03-06T09:36:17.416Z",
+      "notes": "sdsd",
+      "position": {
+        "lat": "51.12404578368388",
+        "lng": "11.155722817726012"
+      }
+    },
+    {
+      "id": "5dad",
+      "cityName": "Rivas-Vaciamadrid",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2025-03-06T10:18:45.915Z",
+      "notes": "dfdf",
+      "position": {
+        "lat": "40.40514511600872",
+        "lng": "-3.5164272221211332"
+      }
+    },
+    {
+      "id": "eb72",
+      "cityName": "Abrantes",
+      "country": "Portugal",
+      "emoji": "🇵🇹",
+      "date": "2025-03-06T10:18:50.590Z",
+      "notes": "ee",
+      "position": {
+        "lat": "39.50405343167135",
+        "lng": "-8.119678695618099"
+      }
+    },
+    {
+      "id": "69b0",
+      "cityName": "Kyiv",
+      "country": "Ukraine",
+      "emoji": "🇺🇦",
+      "date": "2025-03-06T10:21:57.690Z",
+      "notes": "",
+      "position": {
+        "lat": "50.44988039485487",
+        "lng": "30.524396273812854"
+      }
     }
   ]
 }

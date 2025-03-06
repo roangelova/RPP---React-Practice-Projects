@@ -14,8 +14,8 @@ function CountryList() {
         return <Spinner />
     }
 
-    if (!cities.length) {
-        return <Message message='Add you first city by clicking on a city on the map!' />
+    if (!cities) {
+        return <Message message='Add you first country by clicking on a city on the map!' />
     }
 
     const countries = cities.reduce((arr, city) => {

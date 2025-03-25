@@ -9,12 +9,15 @@ import {
   formatCurrency,
   formatDate,
 } from "../../utils/helpers";
+import { useEffect } from 'react';
 
 
 function Order() {
   // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
 
   const order = useLoaderData()
+
+  //we want to fetch the /menu data without actually navigating to that route
   const fetcher = useFetcher();
 
   const {
@@ -27,6 +30,12 @@ function Order() {
     cart,
   } = order;
   const deliveryIn = calcMinutesLeft(estimatedDelivery);
+
+  useEffect(()=> {
+    if(!fetcher.data){
+      fetcher.load('/menu') //the data will be stored in the fetcher data
+    }
+  }, [])
 
   return (
     <div className="space-y-8 px-4 py-6">

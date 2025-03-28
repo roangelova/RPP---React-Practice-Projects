@@ -53,14 +53,9 @@ border: none;
 border-radius: var(--border-radius-sm);
 box-shadow: var(--shadow-sm);
 
-${props => sizes[props.size]}
-${props => variations[props.variation]}
+${({ size = "medium" }) => sizes[size]}
+${({ variation = "primary" }) => variations[variation]}
 `
-
-Button.defaultProps = {
-  variation: 'primary',
-  size: 'medium'
-}
 
 export default Button;
 

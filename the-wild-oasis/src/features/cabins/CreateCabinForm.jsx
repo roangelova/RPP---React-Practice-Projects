@@ -97,10 +97,10 @@ function CreateCabinForm({ onCloseModal }) {
 
       <FormRow>
         {/* type is an HTML attribute! Works auto*/}
-        <Button disabled={isPending} variation="secondary" type="reset" onClick={() => onCloseModal?.()}>
+        <Button disabled={isCreating} variation="secondary" type="reset" onClick={() => onCloseModal?.()}>
           Cancel
         </Button>
-        <Button disabled={isPending}>Create cabin</Button>
+        <Button disabled={isCreating}>Create cabin</Button>
       </FormRow>
     </Form>
   );

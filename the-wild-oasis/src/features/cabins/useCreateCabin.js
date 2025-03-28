@@ -14,7 +14,6 @@ export function useCreateCabin() {
             queryClient.invalidateQueries({
                 queryKey: ['cabins']
             })
-            reset() //clear form on success
             onCloseModal?.() //call if it existss
         },
         onError: (err) => toast.error(err.message)

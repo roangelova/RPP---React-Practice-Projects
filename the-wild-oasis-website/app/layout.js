@@ -3,9 +3,14 @@ import Navigation from "./_components/Navigation"
 
 import "./_styles/globals.css"
 
+//we can override it in other pages by exporting a new metadata; 
 export const metadata = {
-  title: 'The wild oasis',
-  description: 'The best luxury',
+  title:
+  {
+    template: "%s | The Wild Oasis",
+    default: "Welcome | The Wild Oasis"
+  },
+  description: 'Luxurious cabin hotel, located in the heart of the Italian Dolomites, surrounded bu beautiful mountains and dark forests.',
 }
 
 export default function RootLayout({ children }) {

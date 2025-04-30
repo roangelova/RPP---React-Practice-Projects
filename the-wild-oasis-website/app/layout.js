@@ -1,7 +1,12 @@
-import Logo from "./_components/Logo"
-import Navigation from "./_components/Navigation"
-
+import { Josefin_Sans } from 'next/font/google'
 import "./_styles/globals.css"
+import Header from "./_components/Header"
+
+//import, configure (!we need to make sure we select the correct subset) and then finally use the className
+const josefin = Josefin_Sans({
+  subsets: ['latin'],
+  display: 'swap'
+}) // ->provides us with a  __className_2ad2c0
 
 //we can override it in other pages by exporting a new metadata; 
 export const metadata = {
@@ -16,15 +21,15 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-primary-950 text-primary-100">
+      <body className={`${josefin.className} min-h-screen __className_2ad2c0 bg-primary-950 text-primary-100 flex flex-col relative`}>
         <header>
-          <Logo />
-          <Navigation />
+          <Header />
         </header>
-        <main>
+        <div className='flex-1 px-8 py-12'>
+        <main className='mx-auto max-w-7xl'>
           {children}
         </main>
-        <footer>Copyrighty by The Wild Oasis</footer>
+        </div>
       </body>
     </html>
   )

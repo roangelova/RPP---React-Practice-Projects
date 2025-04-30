@@ -1,8 +1,10 @@
+import Spinner from "../_components/Spinner";
+
 export default function Loading() {
-    return ( 
-        <p>Loading.........</p>
-     );
+    return (
+        <div className="grid items-center justify-center">
+            <Spinner />
+            <p className="text-xl text-primary-200">Loading cabin data</p>
+        </div>
+    );
 }
-
-
-//WILL APPLIED TO ALL ROUTES AS PAGE CONTENT

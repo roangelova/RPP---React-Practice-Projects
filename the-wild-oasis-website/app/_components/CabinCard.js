@@ -1,5 +1,5 @@
-//import { UsersIcon } from "@heroicons/react/24/solid";
-
+import { UsersIcon } from "@heroicons/react/24/solid";
+import Image from "next/image";
 import Link from "next/link";
 
 function CabinCard({ cabin }) {
@@ -7,11 +7,14 @@ function CabinCard({ cabin }) {
 
   return (
     <div className="flex border border-primary-800">
-      <Image
-        src={image}
-        alt={`Cabin ${name}`}
-        className="flex-1 border-r border-primary-800"
-      />
+      <div className="relative flex-1">
+        <Image
+          src={image}
+          fill //since we dont have width or height
+          alt={`Cabin ${name}`}
+          className="flex-1 object-cover border-r border-primary-800"
+        />
+      </div>
 
       <div className="flex-grow">
         <div className="pt-5 pb-4 px-7 bg-primary-950">

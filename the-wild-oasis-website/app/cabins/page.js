@@ -6,6 +6,9 @@ export const metadata = {
   title: 'Cabins'
 }
 
+//cache will be invalidated in t
+export const revalidate = 3600;
+
 export default function Page() {
 
   return (

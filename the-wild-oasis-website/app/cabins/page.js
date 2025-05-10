@@ -1,15 +1,19 @@
 import { Suspense } from "react";
 import CabinList from "../_components/CabinList";
 import Spinner from "../_components/Spinner";
+import FilterBy from "../_components/Filter";
 
 export const metadata = {
   title: 'Cabins'
 }
 
 //cache will be invalidated in t
-export const revalidate = 3600;
+export const revalidate = 3600; //now that we have added filtering, the page is dynamic and this no longer takes effect
 
-export default function Page() {
+export default async function Page({ searchParams }) {
+const params = await searchParams;
+  const filter = params.capacity ?? 'all';
+
 
   return (
     <div>
@@ -24,9 +28,13 @@ export default function Page() {
         away from home. The perfect spot for a peaceful, calm vacation. Welcome
         to paradise.
       </p>
+      <div className="flex justify-end mb-8">
+        <FilterBy />
+      </div>
 
-      <Suspense fallback={<Spinner/>}>
-        <CabinList />
+    
+      <Suspense key={filter} fallback={<Spinner />}> 
+        <CabinList filter={filter} />
       </Suspense>
 
     </div>

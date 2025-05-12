@@ -1,33 +1,53 @@
 import TextExpander from "@/app/_components/TextExpander";
-import { getCabin, getCabins } from "@/app/_lib/data-service";
+import {
+  getBookedDatesByCabinId,
+  getCabin,
+  getCabins,
+  getSettings,
+} from "@/app/_lib/data-service";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 
 export async function generateMetadata({ params }) {
   const awaitedParams = await params;
   const { name } = await getCabin(awaitedParams.cabinId);
-  return { title: `Cabin ${name}` }
+  return { title: `Cabin ${name}` };
 }
 
 //make NEXT.JS aware of all the possible ids since we know them beforehand
 export async function generateStaticParams() {
   const cabins = await getCabins();
 
-  const ids = cabins.map(cabin => ({ cabinId: String(cabin.id) }));
+  const ids = cabins.map((cabin) => ({ cabinId: String(cabin.id) }));
 
   return ids;
 }
 
-export default async function Page({ params }) {
-  const cabin = await getCabin(params.cabinId);
+//WE NEED 3 PIECES OF DATA: CABIN, SETTINGS AND BOOKED DATES
 
-  const { id, name, maxCapacity, regularPrice, discount, image, description } = cabin;
+export default async function Page({ params }) {
+  const awaitedParams = await params;
+
+  //THIS IS A BLOCKING WATERFALL:
+  const cabin = await getCabin(awaitedParams.cabinId);
+  const settings = await getSettings();
+  const bookedDates = getBookedDatesByCabinId(awaitedParams.cabinId);
+
+  //We could do this using Promise.all, however, this is again as slow as the slowest operation
+
+  const { id, name, maxCapacity, regularPrice, discount, image, description } =
+    cabin;
 
   return (
     <div className="max-w-6xl mx-auto mt-8">
       <div className="grid grid-cols-[3fr_4fr] gap-20 border border-primary-800 py-3 px-10 mb-24">
         <div className="relative scale-[1.15] -translate-x-3">
-          <Image fill src={image} className="object-cover" alt={`Cabin ${name}`} />
+          <Image
+            fill
+            src={image}
+            className="object-cover"
+            alt={`Cabin ${name}`}
+          />
         </div>
 
         <div>
@@ -36,9 +56,7 @@ export default async function Page({ params }) {
           </h3>
 
           <p className="text-lg text-primary-300 mb-10">
-            <TextExpander>
-              {description}
-            </TextExpander>
+            <TextExpander>{description}</TextExpander>
           </p>
 
           <ul className="flex flex-col gap-4 mb-7">
@@ -67,9 +85,12 @@ export default async function Page({ params }) {
       </div>
 
       <div>
-        <h2 className="text-5xl font-semibold text-center">
-          Reserve today. Pay on arrival.
+        <h2 className="text-5xl font-semibold text-center mb-10 text-accent-400">
+          Reserve cabin {name} today. Pay on arrival.
         </h2>
+
+        <Reservation />
+         
       </div>
     </div>
   );

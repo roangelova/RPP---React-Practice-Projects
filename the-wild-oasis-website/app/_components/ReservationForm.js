@@ -3,7 +3,7 @@
 import { auth } from "../_lib/auth";
 import { useReservation } from "./context/reservationContext";
 
-async function ReservationForm({ cabin, user }) {
+function ReservationForm({ cabin, user }) {
   // CHANGE
   const { maxCapacity } = cabin;
   const { range } = useReservation();

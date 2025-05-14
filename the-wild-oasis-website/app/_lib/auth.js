@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
+import { createGuest, getGuest } from "./data-service";
 
 const authConfig = {
   providers: [
@@ -7,9 +8,42 @@ const authConfig = {
       clientId: process.env.AUTH_GOOGLE_ID,
       clientSecret: process.env.AUTH_GOOGLE_SECRET,
     }),
-    //CredentialsProvider -> if we had a database; 
+    //CredentialsProvider -> if we had a database;
   ],
+  callbacks: {
+    //will be called when a user tries to acces the protected route;
+    authorized({ auth, request }) {
+      return !!auth?.user; //convert any value to booleab
+    },
+    async signIn({ user, account, profile }) {
+      //we will create the data when the user signs in for te first time
+      // we cant add the user Id to the session hre, as the session has not been created yet;
+      try {
+        const existingGuest = await getGuest(user.email);
+
+        if (!existingGuest) {
+          await createGuest({ email: user.email, fullName: user.name });
+        }
+        return true;
+      } catch {
+        return false;
+      }
+    }, //caled after the user submits their credentials, but before they are actually logged in;
+    async session({ session, user }) {
+      const guest = await getGuest(user.email);
+      session.user.userIf = guest.id;
+      return session; //this wau, the userId will be available anywhere in our whole app for us; 
+    },
+  },
+  pages: {
+    signIn: "/login",
+  },
 };
 
-export const {auth, handlers: {GET, POST}} = NextAuth(authConfig)
+export const {
+  auth,
+  signIn,
+  signOut,
+  handlers: { GET, POST },
+} = NextAuth(authConfig);
 //GET, POST --> ARE ACTUALLY ROUTE HANDLER FUNCTIONS

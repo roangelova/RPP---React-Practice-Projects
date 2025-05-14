@@ -1,9 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    images: {
-        remotePatterns: [new URL('https://zudlswpsdtjmtawbnnrr.supabase.co/storage/v1/object/public/cabin-images/**')],
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "zudlswpsdtjmtawbnnrr.supabase.co",
+        port: "",
+        pathname: "/storage/v1/object/public/cabin-images/**",
       },
-      //output: "export" --> as static assets we can export anywhere; wouldnt work with IMAGE
+    ],
+  },
+  // output: "export",
 };
 
 export default nextConfig;

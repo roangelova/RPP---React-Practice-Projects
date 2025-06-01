@@ -1,12 +1,15 @@
 import Form from "@/app/_components/Form";
 import SelectCountry from "@/app/_components/SelectCountry";
+import { auth } from "@/app/_lib/auth";
+import { getGuest } from "@/app/_lib/data-service";
 
 export const metadata = {
-    title: 'Profile'
+  title: 'Profile'
 };
 
-export default function Page() {
-  const nationality = "portugal";
+export default async function Page() {
+  const session = await auth();
+  const guest = await getGuest(session?.user?.email);
 
   return (
     <div>
@@ -19,14 +22,14 @@ export default function Page() {
         faster and smoother. See you soon!
       </p>
 
-       <Form>
-          <SelectCountry
-            name="nationality"
-            id="nationality"
-            className="w-full px-5 py-3 rounded-sm shadow-sm bg-primary-200 text-primary-800"
-            defaultCountry={nationality}
-          />
-        </Form>
+      <Form guest={guest}>
+        <SelectCountry
+          name="nationality"
+          id="nationality"
+          className="w-full px-5 py-3 rounded-sm shadow-sm bg-primary-200 text-primary-800"
+          defaultCountry={guest.nationality}
+        />
+      </Form>
 
     </div>
   );

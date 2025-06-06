@@ -1,16 +1,20 @@
 "use client";
 
+import { updateProfile } from "../_lib/actions";
+
 //THE ONLY WAY TO RENDER A SERVER COMPONENT INTO A SERVER COMPONENT IS TO PASS IT AS A PROP!
 
-function Form({ children }) {
-  const countryFlag = "pt.jpg";
+function Form({ guest, children }) {
+  const { fullName, email, nationality, nationalID, countryFlag } = guest;
 
   return (
-    <form className="flex flex-col gap-6 px-12 py-8 text-lg bg-primary-900">
+    <form action={updateProfile} className="flex flex-col gap-6 px-12 py-8 text-lg bg-primary-900">
       <div className="space-y-2">
         <label>Full name</label>
         <input
           disabled
+          name='fullName'
+          defaultValue={fullName}
           className="w-full px-5 py-3 rounded-sm shadow-sm bg-primary-200 text-primary-800 disabled:cursor-not-allowed disabled:bg-gray-600 disabled:text-gray-400"
         />
       </div>
@@ -19,6 +23,8 @@ function Form({ children }) {
         <label>Email address</label>
         <input
           disabled
+          name='email'
+          defaultValue={email}
           className="w-full px-5 py-3 rounded-sm shadow-sm bg-primary-200 text-primary-800 disabled:cursor-not-allowed disabled:bg-gray-600 disabled:text-gray-400"
         />
       </div>
@@ -28,6 +34,7 @@ function Form({ children }) {
           <label htmlFor="nationality">Where are you from?</label>
           <img
             src={countryFlag}
+            name='countryFlag'
             alt="Country flag"
             className="h-5 rounded-sm"
           />
@@ -39,6 +46,7 @@ function Form({ children }) {
       <div className="space-y-2">
         <label htmlFor="nationalID">National ID number</label>
         <input
+          defaultValue={nationalID}
           name="nationalID"
           className="w-full px-5 py-3 rounded-sm shadow-sm bg-primary-200 text-primary-800"
         />

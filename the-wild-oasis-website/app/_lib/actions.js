@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { auth, signIn, signOut } from "./auth"
 import { supabase } from "./supabase";
 import { getBookings } from "./data-service";
+import { redirect } from "next/navigation";
 
 export async function signInAction() {
     await signIn("google", { redirectTo: '/account' })
@@ -68,7 +69,7 @@ export async function updateBooking(formData) {
   const bookingId = Number(formData.get("bookingId"));
 
   const session = await auth();
-  if (!session) throw new Error("You must be logged in");
+  if (!session) throw new Error("You must be logged in to perform this action!");
 
   const guestBookings = await getBookings(session.user.guestId);
   const guestBookingIds = guestBookings.map((booking) => booking.id);
@@ -90,8 +91,34 @@ export async function updateBooking(formData) {
 
   if (error) throw new Error("Booking could not be updated");
 
+  //we need to revalidate both the parent and the child path. The child path does not automatically get revalidated; 
   revalidatePath(`/account/reservations/edit/${bookingId}`);
   revalidatePath("/account/reservations");
 
   redirect("/account/reservations");
+}
+
+export async function createBooking(bookingData, formData) {
+  const session = await auth();
+  if (!session) throw new Error("You must be logged in");
+
+  const newBooking = {
+    ...bookingData,
+    guestId: session.user.guestId,
+    numGuests: Number(formData.get("numGuests")),
+    observations: formData.get("observations").slice(0, 1000),
+    extrasPrice: 0,
+    totalPrice: bookingData.cabinPrice,
+    isPaid: false,
+    hasBreakfast: false,
+    status: "unconfirmed",
+  };
+
+  const { error } = await supabase.from("bookings").insert([newBooking]);
+
+  if (error) throw new Error("Booking could not be created");
+
+  revalidatePath(`/cabins/${bookingData.cabinId}`);
+
+  redirect("/cabins/thankyou");
 }
